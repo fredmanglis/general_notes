@@ -1,0 +1,5 @@
+#+STARTUP: content
+#+TITLE: General Notes
+
+This repository contains some notes on stuff I consider important, but which I
+might not refer to a lot.

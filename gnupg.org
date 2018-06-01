@@ -1,0 +1,30 @@
+#+STARTUP: content
+#+Title: GNUPG Notes
+
+** Introduction
+
+   GPG is hard. Fight me!
+
+** Links
+
+   - [[https://riseup.net/en/gpg-best-practices][Best Practices Guide]]
+
+** GPG: Extract private key and import on different machine
+
+   Copied verbatim from [[https://makandracards.com/makandra/37763-gpg-extract-private-key-and-import-on-different-machine][here]].
+
+   - Identify your private key by running gpg --list-secret-keys. You need the
+     ID of your private key (second column)
+
+   - Run this command to export your key:
+     #+BEGIN_SRC sh
+     gpg --export-secret-keys $ID > my-private-key.asc
+     #+END_SRC
+
+   - Copy the key to the other machine (scp is your friend)
+
+   - To import the key, run gpg --import my-private-key.asc
+
+   - If the key already existed on the second machine, the import will fail
+     saying 'Key already known'. You will have to delete both the private and
+     public key first (gpg --delete-keys and gpg --delete-secret-keys)
