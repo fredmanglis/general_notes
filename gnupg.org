@@ -28,3 +28,77 @@
    - If the key already existed on the second machine, the import will fail
      saying 'Key already known'. You will have to delete both the private and
      public key first (gpg --delete-keys and gpg --delete-secret-keys)
+
+** Renew Expiry Date of Key(s)
+
+1. List key
+   
+   #+BEGIN_SRC sh
+   $ gpg --list-key your@email.com
+   #+END_SRC
+
+2. Edit key
+   
+   #+BEGIN_SRC sh
+   $ gpg --edit-key your@email.com
+   #+END_SRC
+
+3. List all sub-keys
+   
+   #+BEGIN_SRC sh
+   > list
+   
+   sec  rsa4096/362B0FF8B99D5332
+        created: 2014-03-02  expires: 2019-10-15  usage: SC  
+        trust: ultimate      validity: ultimate
+   ssb  rsa4096/F8221613CB90D509
+        created: 2014-03-02  expires: 2019-10-15  usage: E   
+   [ultimate] (1). Your Name Here <your@email.com>
+   #+END_SRC
+
+4. Use *key* command to select the key to edit
+
+   #+BEGIN_SRC sh
+   > key 0
+   
+   sec  rsa4096/362B0FF8B99D5332
+        created: 2014-03-02  expires: 2019-10-15  usage: SC  
+        trust: ultimate      validity: ultimate
+   ssb  rsa4096/F8221613CB90D509
+        created: 2014-03-02  expires: 2019-10-15  usage: E   
+   [ultimate] (1). Your Name Here <your@email.com>
+   #+END_SRC
+
+5. Now change expiry date using the *expire* command
+   
+   #+BEGIN_SRC sh
+   > expire
+   Changing expiration time for the primary key.
+   Please specify how long the key should be valid.
+            0 = key does not expire
+         <n>  = key expires in n days
+         <n>w = key expires in n weeks
+         <n>m = key expires in n months
+         <n>y = key expires in n years
+   Key is valid for? (0) 1y
+   Key expires at Tue 15 Oct 2019 17:49:05 EAT
+   Is this correct? (y/N) y
+   #+END_SRC
+
+6. Repeat steps 4 and 5 for all keys that you have *key 1*, *key 2*, ... etc.
+
+7. Save your changes
+
+   #+BEGIN_SRC sh
+   > save
+   #+END_SRC
+
+8. Update the servers
+
+   #+BEGIN_SRC sh
+   $ gpg --send-keys F389F409854C40E35233AB01362B0AD8B8BB5A42
+   #+END_SRC
+
+** References
+
+- [[https://www.g-loaded.eu/2010/11/01/change-expiration-date-gpg-key/][How to change the expiration date of a GPG key]]
